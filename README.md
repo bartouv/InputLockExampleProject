@@ -9,5 +9,5 @@ An example of an efficient Input lock service for Unity which follow SOLID princ
 - Easy way to debug what locks are currently locked and what those locks are locking.
 - Input lock service to be the only code responsible for locking and unlocking inputs.
 
-#Description of example
+# Description of example
 In this example there are buttons and 3d models which change color when pressed. I supplied a number of buttons for locking diffrent things such as raycasters and event triggers.
