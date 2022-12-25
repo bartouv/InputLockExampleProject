@@ -10,7 +10,7 @@ namespace InputlockService
     {
         private readonly Dictionary<InputLockTag, HashSet<string>> _locks = new Dictionary<InputLockTag, HashSet<string>>();
         private readonly Dictionary<string, InputLock> _idToInputLock = new Dictionary<string, InputLock>();
-        private readonly List<BaseInputLockable> _inputLockSubscribers = new List<BaseInputLockable>();
+        private readonly HashSet<BaseInputLockable> _inputLockSubscribers = new HashSet<BaseInputLockable>();
 
 #if  UNITY_EDITOR
         public static InputLockService _inputLockService;
@@ -35,37 +35,50 @@ namespace InputlockService
 
         public void SubscribeLockable(BaseInputLockable inputLockable)
         {
+            if(_inputLockSubscribers.Contains(inputLockable)) return;
+            
             _inputLockSubscribers.Add(inputLockable);
             UpdateLockable(inputLockable);
         }
 
         public void UnsubscribeLockable(BaseInputLockable inputLockable)
         {
+            if(!_inputLockSubscribers.Contains(inputLockable)) return;
+            
             _inputLockSubscribers.Remove(inputLockable);
         }
 
         public bool IsTagLocked(InputLockTag tag)
         {
-            return _locks[tag].Count > 0;
+            try
+            {
+                return _locks[tag].Count > 0;
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                Debug.Log($"IsTagLocked {tag.ToString()} is out of bounds");
+            }
+
+            return false;
         }
 
         public InputLock LockAllInputs()
         {
             var inputLockTags = Enum.GetValues(typeof(InputLockTag)).OfType<InputLockTag>().ToList();
-            return LockInput(inputLockTags);;
+            return LockInput(inputLockTags.ToArray());;
         }
 
-        public InputLock LockAllExcept(List<InputLockTag> inputLockTagsExcept)
+        public InputLock LockAllExcept(InputLockTag[] inputLockTagsExcept)
         {
             var inputLockTags = Enum.GetValues(typeof(InputLockTag)).OfType<InputLockTag>().ToList();
             foreach (var exceptionTag in inputLockTagsExcept)
             {
                 inputLockTags.Remove(exceptionTag);
             }
-            return LockInput(inputLockTags);
+            return LockInput(inputLockTags.ToArray());
         }
 
-        public InputLock LockInput(List<InputLockTag> inputLockTags)
+        public InputLock LockInput(InputLockTag[] inputLockTags)
         {
             var inputLock = new InputLock(inputLockTags);
 

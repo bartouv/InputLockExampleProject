@@ -16,22 +16,22 @@ namespace InputlockService
 
       public void LockGuiRaycaster()
       {
-         LockSomeInput(new List<InputLockTag> { InputLockTag.GuiRaycaster });
+         LockSomeInput( new[] { InputLockTag.GuiRaycaster });
       }
       
       public void LockPhysicsRaycaster()
       {
-         LockSomeInput(new List<InputLockTag> { InputLockTag.PhysicsRaycaster });
+         LockSomeInput( new[] { InputLockTag.PhysicsRaycaster });
       }
       
       public void LockCube()
       {
-         LockSomeInput(new List<InputLockTag> { InputLockTag.Cube });
+         LockSomeInput( new[] { InputLockTag.Cube });
       }
       
       public void LockSphere()
       {
-         LockSomeInput(new List<InputLockTag> { InputLockTag.Sphere });
+         LockSomeInput( new[] { InputLockTag.Sphere });
       }
 
       public void UnlockAllInput()
@@ -42,7 +42,7 @@ namespace InputlockService
          }
       }
 
-      private void LockSomeInput(List<InputLockTag> tags)
+      private void LockSomeInput(InputLockTag[] tags)
       {
          _allInputInputLock?.Add(_inputLockService.LockInput(tags));
       }

@@ -18,7 +18,7 @@ namespace InputlockService.Editor
         [Test]
         public void LockInputTest()
         {
-            var lockTags = new List<InputLockTag>() { InputLockTag.Cube };
+            var lockTags = new[] { InputLockTag.Cube };
             _inputLockService.LockInput(lockTags);
         
 
@@ -28,7 +28,7 @@ namespace InputlockService.Editor
         [Test]
         public void LockInputUnlockTest()
         {
-            var lockTags = new List<InputLockTag>() { InputLockTag.Cube };
+            var lockTags = new[] { InputLockTag.Cube };
             var inputLock = _inputLockService.LockInput(lockTags);
             _inputLockService.UnlockInput(inputLock);
 
@@ -38,8 +38,8 @@ namespace InputlockService.Editor
         [Test]
         public void TwoLocksOneUnlockTest()
         {
-            var lockTags1 = new List<InputLockTag>() {InputLockTag.Cube};
-            var lockTags2 = new List<InputLockTag>() { InputLockTag.Cube };
+            var lockTags1 = new[] {InputLockTag.Cube};
+            var lockTags2 = new[] { InputLockTag.Cube };
 
             var inputLock1 = _inputLockService.LockInput(lockTags1);
             var inputLock2 = _inputLockService.LockInput(lockTags2);
@@ -65,7 +65,7 @@ namespace InputlockService.Editor
         [Test]
         public void LockAllInputsExcept()
         {
-            _inputLockService.LockAllExcept(new List<InputLockTag>() { InputLockTag.Cube });
+            _inputLockService.LockAllExcept( new[] { InputLockTag.Cube });
             var inputLockTags = Enum.GetValues(typeof(InputLockTag)).OfType<InputLockTag>().ToList();
             inputLockTags.Remove(InputLockTag.Cube);
             var areAllTagsLocked = true;

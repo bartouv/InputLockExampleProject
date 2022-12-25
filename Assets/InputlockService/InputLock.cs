@@ -7,10 +7,10 @@ namespace InputlockService
     public class InputLock
     {
         public readonly string Guid;
-        public readonly List<InputLockTag> InputLockTags;
+        public readonly InputLockTag[] InputLockTags;
         public readonly string LockOwner;
 
-        public InputLock(List<InputLockTag> inputLockTags,[CallerFilePath] string callerName = "")
+        public InputLock(InputLockTag[] inputLockTags,[CallerFilePath] string callerName = "")
         {
             Guid = System.Guid.NewGuid().ToString();
             InputLockTags = inputLockTags;
